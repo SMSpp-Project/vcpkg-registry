@@ -1,19 +1,23 @@
 vcpkg_buildpath_length_warning(37)
 
-# get back tar.gz of tag
-vcpkg_from_gitlab(
-    GITLAB_URL https://gitlab.com
-    OUT_SOURCE_PATH SOURCE_PATH
-    REPO smspp/smspp-project
-    REF  0.5.0
-    SHA512   10013a485ce3f5de0cf9dd0ec3abad0d0b916952ec6c7812603fe6717bdf00c68106d7a2393802518f59e6cfdb427a040e75ed340933e8efb910253e0dc8c899
-    HEAD_REF develop
-)
+# smspp-project is an umbrella of git submodules (core SMS++, Blocks, Solvers,
+# tools). The release source archive does not contain submodule contents, so
+# the sources are obtained with a recursive git clone pinned to the release tag
+# (0.5.0 == commit f068cc8716e9013e3c0e8f6822359902ea0084a9) instead of
+# vcpkg_from_gitlab. All submodule URLs are public https://gitlab.com/smspp/*.
+vcpkg_find_acquire_program(GIT)
 
-# NOTE: smspp-project is an umbrella of git submodules (SMS++, Blocks, Solvers,
-# tools). The source archive above does NOT contain submodule contents; they
-# must be made available at ${SOURCE_PATH} before configuring (e.g. vendored
-# into the registry, or fetched with `git submodule update --init --recursive`).
+set(SOURCE_PATH "${CURRENT_BUILDTREES_DIR}/src/smspp-0.5.0")
+if(NOT EXISTS "${SOURCE_PATH}/.git")
+    file(REMOVE_RECURSE "${SOURCE_PATH}")
+    vcpkg_execute_required_process(
+        COMMAND "${GIT}" clone --branch 0.5.0 --depth 1
+                --recurse-submodules --shallow-submodules
+                https://gitlab.com/smspp/smspp-project.git "${SOURCE_PATH}"
+        WORKING_DIRECTORY "${CURRENT_BUILDTREES_DIR}"
+        LOGNAME clone-${TARGET_TRIPLET}
+    )
+endif()
 
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}

@@ -1,24 +1,24 @@
 {
   "name": "stopt",
-  "version": "6.3", 
-  "description": "A stochastic optimization library",  
-    "homepage": "https://gitlab.com/stochastic-control/StOpt",
-    "dependencies": [
-	"python3",
-	"zlib",
-	"bzip2",
-	"eigen3",
-	"pybind11",
-	"coin-or-osi",
-	"coin-or-clp",
-	"boost-chrono",
-	"boost-system",
-	"boost-timer",
-	"boost-serialization",
-        "boost-test",
-	"boost-random",
-	"boost-log",
-	"boost-multi-array",
-	"boost-mpi"
-	]
+  "version": "6.3",
+  "description": "A stochastic optimization library",
+  "homepage": "https://gitlab.com/stochastic-control/StOpt",
+  "dependencies": [
+    "boost-chrono",
+    "boost-log",
+    "boost-mpi",
+    "boost-multi-array",
+    "boost-random",
+    "boost-serialization",
+    "boost-system",
+    "boost-test",
+    "boost-timer",
+    "bzip2",
+    "coin-or-clp",
+    "coin-or-osi",
+    "eigen3",
+    "pybind11",
+    "python3",
+    "zlib"
+  ]
 }
