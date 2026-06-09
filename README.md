@@ -6,7 +6,7 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 
 | Port  | Version | Upstream                                    |
 |-------|---------|---------------------------------------------|
-| smspp | 0.5.0   | https://gitlab.com/smspp/smspp-project      |
+| smspp | 0.5.1   | https://gitlab.com/smspp/smspp-project      |
 | stopt | 6.3     | https://gitlab.com/stochastic-control/StOpt |
 
 `stopt` is a dependency of `smspp` that is not in the default vcpkg registry, so
@@ -61,7 +61,7 @@ vcpkg resolves the requested versions through `versions/baseline.json` and the
 ```
 ports/
   smspp/
-    portfile.cmake      # fetches smspp-project 0.5.0 from GitLab and builds it
+    portfile.cmake      # fetches smspp-project 0.5.1 from GitLab and builds it
     vcpkg.json          # port manifest + dependencies
   stopt/
     portfile.cmake      # fetches StOpt v6.3 from GitLab and builds it

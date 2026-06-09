@@ -10,15 +10,15 @@ set(VCPKG_POLICY_SKIP_ABSOLUTE_PATHS_CHECK enabled)
 # smspp-project is an umbrella of git submodules (core SMS++, Blocks, Solvers,
 # tools). The release source archive does not contain submodule contents, so
 # the sources are obtained with a recursive git clone pinned to the release tag
-# (0.5.0 == commit f068cc8716e9013e3c0e8f6822359902ea0084a9) instead of
+# (0.5.1 == commit 4ec149dd796141076fc73f5f5e8efa80a1228c55) instead of
 # vcpkg_from_gitlab. All submodule URLs are public https://gitlab.com/smspp/*.
 vcpkg_find_acquire_program(GIT)
 
-set(SOURCE_PATH "${CURRENT_BUILDTREES_DIR}/src/smspp-0.5.0")
+set(SOURCE_PATH "${CURRENT_BUILDTREES_DIR}/src/smspp-0.5.1")
 if(NOT EXISTS "${SOURCE_PATH}/.git")
     file(REMOVE_RECURSE "${SOURCE_PATH}")
     vcpkg_execute_required_process(
-        COMMAND "${GIT}" clone --branch 0.5.0 --depth 1
+        COMMAND "${GIT}" clone --branch 0.5.1 --depth 1
                 --recurse-submodules --shallow-submodules
                 https://gitlab.com/smspp/smspp-project.git "${SOURCE_PATH}"
         WORKING_DIRECTORY "${CURRENT_BUILDTREES_DIR}"
