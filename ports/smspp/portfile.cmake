@@ -101,7 +101,7 @@ file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/doc"  "${CURRENT_PACKAGES_DIR}/debug/doc")
 
 # LEMON is supplied by the liblemon dependency, but the umbrella's bundled
-# LEMONSolver fetches and installs its own copy, which collides with liblemon.
+# MCFLemonSolver fetches and installs its own copy, which collides with liblemon.
 # Drop the duplicated LEMON files (headers, static lib, pkgconfig, CMake config)
 # from this package; liblemon still provides them.
 file(REMOVE_RECURSE
