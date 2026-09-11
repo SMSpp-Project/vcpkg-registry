@@ -59,6 +59,9 @@ if n != 1:
 open(p, 'w').write(s)
 PYEOF
 
+# the version in the table of the README
+sed -i -E "s/^(\| smspp \| )[^ ]+( +\|)/\1$VERSION\2/" README.md
+
 git add ports/smspp
 TREE=$(git write-tree --prefix=ports/smspp/)
 
@@ -86,7 +89,7 @@ with open(p, 'w') as f:
     f.write('\n')
 PYEOF
 
-git add versions
+git add versions README.md
 git commit -q -m "smspp $VERSION"
 echo "smspp $VERSION, git-tree $TREE: $(git rev-parse --short HEAD)"
 
