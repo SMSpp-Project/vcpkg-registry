@@ -14,7 +14,7 @@ set(VCPKG_POLICY_SKIP_ABSOLUTE_PATHS_CHECK enabled)
 vcpkg_download_distfile(ARCHIVE
     URLS "https://gitlab.com/api/v4/projects/smspp%2Fsmspp-project/packages/generic/smspp-project/${VERSION}/smspp-project-${VERSION}.tar.gz"
     FILENAME "smspp-project-${VERSION}.tar.gz"
-    SHA512 0)
+    SHA512 a5fc6149494898c5a3c4dfa34e1de42dfc17199675e15f4887a8c19af64ea6ab819195c8ac6465a9c0dc012f2e1d693d4a3f71dccf4c05048e182ae9b9d1fc0d)
 vcpkg_extract_source_archive(SOURCE_PATH
     ARCHIVE "${ARCHIVE}"
     NO_REMOVE_ONE_LEVEL)
