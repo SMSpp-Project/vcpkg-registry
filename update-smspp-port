@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+# --------------------------------------------------------------------------- #
+# Script to update the smspp port of this registry to a new SMS++ release     #
+#                                                                             #
+# It sets the version of ports/smspp/vcpkg.json, whose release tarball the    #
+# portfile downloads, the SHA512 of that tarball, and adds the version to     #
+# the version database as vcpkg x-add-version would do: the git-tree of the   #
+# port is computed from the index, so neither vcpkg nor a build is needed.    #
+# The result is one commit, which --push pushes to develop and master.        #
+#                                                                             #
+# Usage:                                                                      #
+#                                                                             #
+#          $ ./update-smspp-port <version> [--push]                           #
+#                                                                             #
+# The release pipeline of smspp-project runs it on every new tag.             #
+#                                                                             #
+#                                Donato Meoli                                 #
+#                         Dipartimento di Informatica                         #
+#                             Universita' di Pisa                             #
+# --------------------------------------------------------------------------- #
+
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+  echo "Usage: $0 <version> [--push]"
+  exit 1
+fi
+
+VERSION="$1"
+PUSH="${2:-}"
+
+cd "$(dirname "$0")"
+
+# the SHA512 of the release tarball, which the portfile downloads
+URL="https://gitlab.com/api/v4/projects/smspp%2Fsmspp-project/packages/generic/smspp-project/$VERSION/smspp-project-$VERSION.tar.gz"
+SHA512=$(curl -sSfL "$URL" | sha512sum | cut -d' ' -f1)
+
+# the version of the port, with no port-version since it is a new release,
+# and the SHA512 of its tarball
+python3 - "$VERSION" "$SHA512" <<'PYEOF'
+import json, re, sys
+version, sha512 = sys.argv[1], sys.argv[2]
+
+p = 'ports/smspp/vcpkg.json'
+port = json.load(open(p))
+port['version'] = version
+port.pop('port-version', None)
+with open(p, 'w') as f:
+    json.dump(port, f, indent=2)
+    f.write('\n')
+
+p = 'ports/smspp/portfile.cmake'
+s = open(p).read()
+s, n = re.subn(r'(vcpkg_download_distfile\(ARCHIVE.*?SHA512 )[0-9a-f]+\)',
+               lambda m: m.group(1) + sha512 + ')', s, count=1, flags=re.S)
+if n != 1:
+    sys.exit(f'no SHA512 of the tarball in {p}')
+open(p, 'w').write(s)
+PYEOF
+
+git add ports/smspp
+TREE=$(git write-tree --prefix=ports/smspp/)
+
+# the version database: the new version on top, and the baseline
+python3 - "$VERSION" "$TREE" <<'PYEOF'
+import json, sys
+version, tree = sys.argv[1], sys.argv[2]
+
+p = 'versions/s-/smspp.json'
+db = json.load(open(p))
+entry = {'version': version, 'git-tree': tree}
+if any(v.get('version') == version and v.get('port-version', 0) == 0
+       for v in db['versions']):
+    sys.exit(f'smspp {version} is already in {p}')
+db['versions'].insert(0, entry)
+with open(p, 'w') as f:
+    json.dump(db, f, indent=2)
+    f.write('\n')
+
+p = 'versions/baseline.json'
+base = json.load(open(p))
+base['default']['smspp'] = {'baseline': version, 'port-version': 0}
+with open(p, 'w') as f:
+    json.dump(base, f, indent=2)
+    f.write('\n')
+PYEOF
+
+git add versions
+git commit -q -m "smspp $VERSION"
+echo "smspp $VERSION, git-tree $TREE: $(git rev-parse --short HEAD)"
+
+if [[ "$PUSH" == "--push" ]]; then
+  git push origin HEAD:develop HEAD:master
+fi

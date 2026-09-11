@@ -8,23 +8,61 @@ set(VCPKG_POLICY_SKIP_LIB_CMAKE_MERGE_CHECK enabled)
 set(VCPKG_POLICY_SKIP_ABSOLUTE_PATHS_CHECK enabled)
 
 # smspp-project is an umbrella of git submodules (core SMS++, Blocks, Solvers,
-# tools). The release source archive does not contain submodule contents, so
-# the sources are obtained with a recursive git clone pinned to the release tag
-# (0.5.1 == commit 4ec149dd796141076fc73f5f5e8efa80a1228c55) instead of
-# vcpkg_from_gitlab. All submodule URLs are public https://gitlab.com/smspp/*.
-vcpkg_find_acquire_program(GIT)
+# tools), so the sources are the tarball of the release, which carries them
+# all together with the version of each; the release pipeline puts it in the
+# generic package registry of smspp-project.
+vcpkg_download_distfile(ARCHIVE
+    URLS "https://gitlab.com/api/v4/projects/smspp%2Fsmspp-project/packages/generic/smspp-project/${VERSION}/smspp-project-${VERSION}.tar.gz"
+    FILENAME "smspp-project-${VERSION}.tar.gz"
+    SHA512 0)
+vcpkg_extract_source_archive(SOURCE_PATH
+    ARCHIVE "${ARCHIVE}"
+    NO_REMOVE_ONE_LEVEL)
 
-set(SOURCE_PATH "${CURRENT_BUILDTREES_DIR}/src/smspp-0.5.1")
-if(NOT EXISTS "${SOURCE_PATH}/.git")
-    file(REMOVE_RECURSE "${SOURCE_PATH}")
-    vcpkg_execute_required_process(
-        COMMAND "${GIT}" clone --branch 0.5.1 --depth 1
-                --recurse-submodules --shallow-submodules
-                https://gitlab.com/smspp/smspp-project.git "${SOURCE_PATH}"
-        WORKING_DIRECTORY "${CURRENT_BUILDTREES_DIR}"
-        LOGNAME clone-${TARGET_TRIPLET}
-    )
-endif()
+# the settings of the umbrella for its developers, e.g. shared libraries, give
+# way to the ones of vcpkg
+file(REMOVE "${SOURCE_PATH}/CMakeSettings.txt")
+
+# feature -> module, whose BUILD_<module> option builds it
+set(smspp_modules
+    bendersdecompositionsolver BendersDecompositionSolver
+    binaryknapsackblock BinaryKnapsackBlock
+    branchandxsolver BranchAndXSolver
+    bundlesolver BundleSolver
+    capacitatedfacilitylocationblock CapacitatedFacilityLocationBlock
+    frankwolfesolver FrankWolfeSolver
+    investmentblock InvestmentBlock
+    lagrangiandualsolver LagrangianDualSolver
+    lukfiblock LukFiBlock
+    mcfblock MCFBlock
+    mcfclasssolver MCFClassSolver
+    mcflemonsolver MCFLemonSolver
+    milpsolver MILPSolver
+    mmcfblock MMCFBlock
+    multistagestochasticblock MultiStageStochasticBlock
+    scenarioreductionsolver ScenarioReductionSolver
+    sddpblock SDDPBlock
+    singleflowdcrblock SingleFlowDCRBlock
+    stochasticblock StochasticBlock
+    svmblock SVMBlock
+    tools tools
+    twostagestochasticblock TwoStageStochasticBlock
+    ucblock UCBlock)
+
+set(smspp_feature_pairs "")
+set(smspp_umbrella OFF)
+set(_smspp_i 0)
+list(LENGTH smspp_modules _smspp_n)
+while(_smspp_i LESS _smspp_n)
+    list(GET smspp_modules ${_smspp_i} _smspp_feature)
+    math(EXPR _smspp_i "${_smspp_i} + 1")
+    list(GET smspp_modules ${_smspp_i} _smspp_dir)
+    math(EXPR _smspp_i "${_smspp_i} + 1")
+    list(APPEND smspp_feature_pairs ${_smspp_feature} BUILD_${_smspp_dir})
+    if(_smspp_feature IN_LIST FEATURES)
+        set(smspp_umbrella ON)
+    endif()
+endwhile()
 
 # SMS++ assumes that, when a netCDFCxx CMake config package is found, it provides
 # the target netCDF::netCDFCxx. The vcpkg (and modern upstream) netcdf-cxx4 config
@@ -82,12 +120,48 @@ endif ()
 ${netcdf_bridge}")
 endforeach()
 
+# SMS++ fetches FastFlow at configure time; the port provides it instead, at a
+# fixed commit, so that the build needs no network and is reproducible
+vcpkg_from_github(
+    OUT_SOURCE_PATH FASTFLOW_SOURCE_PATH
+    REPO fastflow/fastflow
+    REF d476f66ab924d8d122f54b4b90aee00ef979aea8
+    SHA512 15b9a0a365308f063cf15ca111ba5f60af0263692745762593d02597bfb0e5ba1e711c70a5d496c6676c20d9ce28aabec494975f961feb6b5171d131a0e4a3e4
+    HEAD_REF master)
+
+vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
+    FEATURES ${smspp_feature_pairs})
+
+# The umbrella builds the enabled modules and the core they need; the core
+# alone is built from its own directory
+if(smspp_umbrella)
+    set(smspp_source "${SOURCE_PATH}")
+else()
+    set(smspp_source "${SOURCE_PATH}/SMS++")
+    set(FEATURE_OPTIONS "")
+endif()
+
 vcpkg_configure_cmake(
-    SOURCE_PATH ${SOURCE_PATH}
+    SOURCE_PATH ${smspp_source}
     PREFER_NINJA
     OPTIONS
+    ${FEATURE_OPTIONS}
     -DBUILD_tests=OFF
     -DBUILD_TESTING=OFF
+    -DSMSPP_TOOLS_INSTALL_DIR=tools/${PORT}
+    -DFETCHCONTENT_SOURCE_DIR_FASTFLOW=${FASTFLOW_SOURCE_PATH}
+    # only the dependencies of the port, and not the solvers that the default
+    # paths of the umbrella (extlib/) may find elsewhere on the machine
+    -DCMAKE_DISABLE_FIND_PACKAGE_CPLEX=ON
+    -DCMAKE_DISABLE_FIND_PACKAGE_GUROBI=ON
+    -DCMAKE_DISABLE_FIND_PACKAGE_SCIP=ON
+    -DCMAKE_DISABLE_FIND_PACKAGE_PIPS=ON
+    -DCMAKE_DISABLE_FIND_PACKAGE_Torch=ON
+    -DHiGHS_ROOT=${CURRENT_INSTALLED_DIR}
+    -DStOpt_ROOT=${CURRENT_INSTALLED_DIR}
+    -DCoinUtils_ROOT=${CURRENT_INSTALLED_DIR}
+    -DOsi_ROOT=${CURRENT_INSTALLED_DIR}
+    -DClp_ROOT=${CURRENT_INSTALLED_DIR}
     # netcdf-c is a static lib here, so its private deps (curl, tinyxml2) must
     # propagate as $<LINK_ONLY:...> targets into executables built in sibling
     # subdirectories (e.g. UCBlock/tools). Those imported targets are only
@@ -97,6 +171,26 @@ vcpkg_configure_cmake(
 )
 
 vcpkg_install_cmake()
+
+# The tools of the tools/ submodule are installed in tools/smspp by the build,
+# where they find their configuration; the executables of the modules (e.g.
+# nc4generator of UCBlock) are moved there from bin/.
+file(GLOB _smspp_bin_exes
+     "${CURRENT_PACKAGES_DIR}/bin/*${VCPKG_TARGET_EXECUTABLE_SUFFIX}")
+set(_smspp_exe_names "")
+foreach(_smspp_exe IN LISTS _smspp_bin_exes)
+    if(NOT IS_DIRECTORY "${_smspp_exe}" AND NOT _smspp_exe MATCHES "\\.(dll|pdb)$")
+        get_filename_component(_smspp_name "${_smspp_exe}" NAME_WE)
+        list(APPEND _smspp_exe_names ${_smspp_name})
+    endif()
+endforeach()
+if(_smspp_exe_names)
+    vcpkg_copy_tools(TOOL_NAMES ${_smspp_exe_names} AUTO_CLEAN)
+endif()
+if(VCPKG_TARGET_IS_WINDOWS AND EXISTS "${CURRENT_PACKAGES_DIR}/tools/${PORT}")
+    vcpkg_copy_tool_dependencies("${CURRENT_PACKAGES_DIR}/tools/${PORT}")
+endif()
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/tools")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/doc"  "${CURRENT_PACKAGES_DIR}/debug/doc")
 

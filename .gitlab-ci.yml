@@ -1,0 +1,18 @@
+# The release pipeline of smspp-project triggers this one with the version of
+# the new tag in SMSPP_VERSION: the smspp port is updated to it and pushed.
+# VCPKG_REGISTRY_TOKEN is a project access token of this repository, with the
+# write_repository scope and a role that can push to develop and master.
+
+update_smspp:
+  image: alpine
+  rules:
+    - if: $SMSPP_VERSION
+  before_script:
+    - apk add --no-cache git python3
+    - git config user.name "$GITLAB_USER_NAME"
+    - git config user.email "$GITLAB_USER_EMAIL"
+  script:
+    - git fetch origin develop
+    - git checkout -B develop origin/develop
+    - ./update-smspp-port "$SMSPP_VERSION"
+    - git push "https://oauth2:${VCPKG_REGISTRY_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git" HEAD:develop HEAD:master

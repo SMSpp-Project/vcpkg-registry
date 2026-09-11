@@ -42,6 +42,30 @@ In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
 }
 ```
 
+### Choosing the modules
+
+Every module of SMS++ is a feature of the port, and all of them, together with
+the command-line tools, are its default features: `smspp` alone is the whole
+of SMS++. `core` drops the default features, so a project can ask only for
+the modules it uses, which brings in only their dependencies:
+
+```json
+"dependencies": [
+  {
+    "name": "smspp",
+    "default-features": false,
+    "features": [ "ucblock", "milpsolver" ]
+  }
+]
+```
+
+or, in classic mode, `vcpkg install "smspp[core,ucblock,milpsolver]"`. A
+module brings in the modules it needs, e.g. `investmentblock` those of
+`sddpblock`, `twostagestochasticblock` and `ucblock`; the `features` of
+`ports/smspp/vcpkg.json` list them all. The `tools` feature builds the tools of the
+enabled modules (e.g. `ucblock_solver`) in `tools/smspp`, together with
+their configuration.
+
 `baseline` for this registry must be the **full commit SHA** of the desired
 commit of *this* repository (normally the latest on the default branch):
 
@@ -61,7 +85,7 @@ vcpkg resolves the requested versions through `versions/baseline.json` and the
 ```
 ports/
   smspp/
-    portfile.cmake      # fetches smspp-project 0.5.1 from GitLab and builds it
+    portfile.cmake      # fetches smspp-project at the tag of the version and builds it
     vcpkg.json          # port manifest + dependencies
   stopt/
     portfile.cmake      # fetches StOpt v6.3 from GitLab and builds it
@@ -75,7 +99,18 @@ versions/
 
 ## Adding / updating a port version
 
-1. Edit `ports/<port>/` (bump `version`, update the source `REF`/`SHA512`, …).
+A new tag of smspp-project updates the smspp port by itself: the release
+pipeline of smspp-project triggers the one of this repository, which runs
+
+```bash
+./update-smspp-port <version> --push
+```
+
+i.e. sets the version of the port, which is also the tag its portfile checks
+out, adds it to the version database and pushes it. The same script can be
+run by hand. Any other change to a port goes as follows:
+
+1. Edit `ports/<port>/` (bump `version` or `port-version`, …).
 2. Commit the change.
 3. Record the new version with its committed tree hash, either via
    `vcpkg x-add-version <port>` (from a vcpkg checkout), or by hand in

@@ -1,30 +1,257 @@
 {
   "name": "smspp",
-  "version": "0.5.1",
-  "port-version": 2,
+  "version": "0.6.0",
   "description": "A C++17 framework for modeling and solving block-structured mathematical optimization problems",
   "homepage": "https://gitlab.com/smspp/smspp-project",
   "license": "LGPL-3.0-only",
   "dependencies": [
-    "boost",
-    "boost-mpi",
-    "bzip2",
-    "coin-or-clp",
-    "coin-or-osi",
-    "coinutils",
+    "boost-algorithm",
+    "boost-any",
+    "boost-bimap",
+    "boost-function",
+    "boost-functional",
+    "boost-multi-array",
     "eigen3",
-    "getopt",
-    "highs",
-    "liblemon",
-    "liblinear",
-    "libsvm",
-    {
-      "name": "msmpi",
-      "platform": "windows"
+    "netcdf-cxx4"
+  ],
+  "default-features": [
+    "bendersdecompositionsolver",
+    "binaryknapsackblock",
+    "branchandxsolver",
+    "bundlesolver",
+    "capacitatedfacilitylocationblock",
+    "frankwolfesolver",
+    "investmentblock",
+    "lagrangiandualsolver",
+    "lukfiblock",
+    "mcfblock",
+    "mcfclasssolver",
+    "mcflemonsolver",
+    "milpsolver",
+    "mmcfblock",
+    "multistagestochasticblock",
+    "scenarioreductionsolver",
+    "sddpblock",
+    "singleflowdcrblock",
+    "stochasticblock",
+    "svmblock",
+    "tools",
+    "twostagestochasticblock",
+    "ucblock"
+  ],
+  "features": {
+    "bendersdecompositionsolver": {
+      "description": "Generic Benders decomposition Solver"
     },
-    "netcdf-cxx4",
-    "pthreads",
-    "stopt",
-    "zlib"
-  ]
+    "binaryknapsackblock": {
+      "description": "Binary knapsack Block and its dynamic programming Solver"
+    },
+    "branchandxsolver": {
+      "description": "Relaxation-agnostic Branch-and-X Solver"
+    },
+    "bundlesolver": {
+      "description": "Bundle methods for nondifferentiable optimization",
+      "dependencies": [
+        "bzip2",
+        "coin-or-clp",
+        "coin-or-osi",
+        "coinutils",
+        "zlib",
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "milpsolver"
+          ]
+        }
+      ]
+    },
+    "capacitatedfacilitylocationblock": {
+      "description": "Capacitated facility location Block",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "binaryknapsackblock",
+            "mcfblock"
+          ]
+        }
+      ]
+    },
+    "frankwolfesolver": {
+      "description": "Frank-Wolfe and Dantzig-Wolfe decomposition Solver"
+    },
+    "investmentblock": {
+      "description": "Investment (capacity expansion) Block",
+      "dependencies": [
+        "boost-serialization",
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "sddpblock",
+            "twostagestochasticblock",
+            "ucblock"
+          ]
+        }
+      ]
+    },
+    "lagrangiandualsolver": {
+      "description": "Lagrangian dual Solver",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "milpsolver"
+          ]
+        }
+      ]
+    },
+    "lukfiblock": {
+      "description": "Test functions for nonsmooth optimization"
+    },
+    "mcfblock": {
+      "description": "Min-cost flow Block"
+    },
+    "mcfclasssolver": {
+      "description": "Min-cost flow Solvers of MCFClass",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "mcfblock"
+          ]
+        }
+      ]
+    },
+    "mcflemonsolver": {
+      "description": "Min-cost flow Solvers of LEMON",
+      "dependencies": [
+        "liblemon",
+        {
+          "name": "pthreads",
+          "platform": "windows"
+        },
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "mcfblock"
+          ]
+        }
+      ]
+    },
+    "milpsolver": {
+      "description": "MILP Solvers, here on HiGHS",
+      "dependencies": [
+        "boost-preprocessor",
+        "highs"
+      ]
+    },
+    "mmcfblock": {
+      "description": "Multicommodity min-cost flow Block",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "binaryknapsackblock",
+            "mcfblock"
+          ]
+        }
+      ]
+    },
+    "multistagestochasticblock": {
+      "description": "Multi-stage stochastic Block",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "twostagestochasticblock"
+          ]
+        }
+      ]
+    },
+    "scenarioreductionsolver": {
+      "description": "Scenario reduction Solvers",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "twostagestochasticblock"
+          ]
+        }
+      ]
+    },
+    "sddpblock": {
+      "description": "Stochastic Dual Dynamic Programming Block",
+      "dependencies": [
+        "boost-iostreams",
+        "boost-mpi",
+        {
+          "name": "msmpi",
+          "platform": "windows"
+        },
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "stochasticblock"
+          ]
+        },
+        "stopt"
+      ]
+    },
+    "singleflowdcrblock": {
+      "description": "Single-flow delay-constrained routing Block"
+    },
+    "stochasticblock": {
+      "description": "Stochastic Block and scenario sets",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "capacitatedfacilitylocationblock"
+          ]
+        }
+      ]
+    },
+    "svmblock": {
+      "description": "Support Vector Machine Block",
+      "dependencies": [
+        "liblinear",
+        "libsvm"
+      ]
+    },
+    "tools": {
+      "description": "The command-line tools of the enabled modules, e.g. ucblock_solver, installed in tools/smspp",
+      "dependencies": [
+        {
+          "name": "getopt",
+          "platform": "windows"
+        }
+      ]
+    },
+    "twostagestochasticblock": {
+      "description": "Two-stage stochastic Block",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "stochasticblock"
+          ]
+        }
+      ]
+    },
+    "ucblock": {
+      "description": "Unit Commitment Block, its units and networks"
+    }
+  }
 }
