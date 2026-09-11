@@ -9,7 +9,7 @@ update_smspp:
   rules:
     - if: $SMSPP_VERSION
   before_script:
-    - apk add --no-cache git python3 curl
+    - apk add --no-cache git python3 curl bash
     - git config user.name "$GITLAB_USER_NAME"
     - git config user.email "$GITLAB_USER_EMAIL"
   script:
