@@ -25,28 +25,28 @@ file(REMOVE "${SOURCE_PATH}/CMakeSettings.txt")
 
 # feature -> module, whose BUILD_<module> option builds it
 set(smspp_modules
-    bendersdecompositionsolver BendersDecompositionSolver
-    binaryknapsackblock BinaryKnapsackBlock
-    branchandxsolver BranchAndXSolver
-    bundlesolver BundleSolver
-    capacitatedfacilitylocationblock CapacitatedFacilityLocationBlock
-    frankwolfesolver FrankWolfeSolver
-    investmentblock InvestmentBlock
-    lagrangiandualsolver LagrangianDualSolver
-    lukfiblock LukFiBlock
-    mcfblock MCFBlock
-    mcfclasssolver MCFClassSolver
-    mcflemonsolver MCFLemonSolver
-    milpsolver MILPSolver
-    mmcfblock MMCFBlock
-    multistagestochasticblock MultiStageStochasticBlock
-    scenarioreductionsolver ScenarioReductionSolver
-    sddpblock SDDPBlock
-    singleflowdcrblock SingleFlowDCRBlock
-    stochasticblock StochasticBlock
-    svmblock SVMBlock
+    bds BendersDecompositionSolver
+    bkb BinaryKnapsackBlock
+    bnx BranchAndXSolver
+    bundle BundleSolver
+    cflb CapacitatedFacilityLocationBlock
+    frankwolfe FrankWolfeSolver
+    investment InvestmentBlock
+    lds LagrangianDualSolver
+    lukfi LukFiBlock
+    mcf MCFBlock
+    mcfclass MCFClassSolver
+    mcflemon MCFLemonSolver
+    milp MILPSolver
+    mmcf MMCFBlock
+    mssb MultiStageStochasticBlock
+    srs ScenarioReductionSolver
+    sddp SDDPBlock
+    sfdcr SingleFlowDCRBlock
+    stochastic StochasticBlock
+    svm SVMBlock
     tools tools
-    twostagestochasticblock TwoStageStochasticBlock
+    tssb TwoStageStochasticBlock
     ucblock UCBlock)
 
 set(smspp_feature_pairs "")

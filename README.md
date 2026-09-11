@@ -54,14 +54,14 @@ the modules it uses, which brings in only their dependencies:
   {
     "name": "smspp",
     "default-features": false,
-    "features": [ "ucblock", "milpsolver" ]
+    "features": [ "ucblock", "milp" ]
   }
 ]
 ```
 
-or, in classic mode, `vcpkg install "smspp[core,ucblock,milpsolver]"`. A
-module brings in the modules it needs, e.g. `investmentblock` those of
-`sddpblock`, `twostagestochasticblock` and `ucblock`; the `features` of
+or, in classic mode, `vcpkg install "smspp[core,ucblock,milp]"`. A
+module brings in the modules it needs, e.g. `investment` those of `sddp`,
+`tssb` and `ucblock`; the `features` of
 `ports/smspp/vcpkg.json` list them all. The `tools` feature builds the tools of the
 enabled modules (e.g. `ucblock_solver`) in `tools/smspp`, together with
 their configuration.

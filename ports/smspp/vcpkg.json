@@ -15,41 +15,41 @@
     "netcdf-cxx4"
   ],
   "default-features": [
-    "bendersdecompositionsolver",
-    "binaryknapsackblock",
-    "branchandxsolver",
-    "bundlesolver",
-    "capacitatedfacilitylocationblock",
-    "frankwolfesolver",
-    "investmentblock",
-    "lagrangiandualsolver",
-    "lukfiblock",
-    "mcfblock",
-    "mcfclasssolver",
-    "mcflemonsolver",
-    "milpsolver",
-    "mmcfblock",
-    "multistagestochasticblock",
-    "scenarioreductionsolver",
-    "sddpblock",
-    "singleflowdcrblock",
-    "stochasticblock",
-    "svmblock",
+    "bds",
+    "bkb",
+    "bnx",
+    "bundle",
+    "cflb",
+    "frankwolfe",
+    "investment",
+    "lds",
+    "lukfi",
+    "mcf",
+    "mcfclass",
+    "mcflemon",
+    "milp",
+    "mmcf",
+    "mssb",
+    "sddp",
+    "sfdcr",
+    "srs",
+    "stochastic",
+    "svm",
     "tools",
-    "twostagestochasticblock",
+    "tssb",
     "ucblock"
   ],
   "features": {
-    "bendersdecompositionsolver": {
+    "bds": {
       "description": "Generic Benders decomposition Solver"
     },
-    "binaryknapsackblock": {
+    "bkb": {
       "description": "Binary knapsack Block and its dynamic programming Solver"
     },
-    "branchandxsolver": {
+    "bnx": {
       "description": "Relaxation-agnostic Branch-and-X Solver"
     },
-    "bundlesolver": {
+    "bundle": {
       "description": "Bundle methods for nondifferentiable optimization",
       "dependencies": [
         "bzip2",
@@ -61,28 +61,28 @@
           "name": "smspp",
           "default-features": false,
           "features": [
-            "milpsolver"
+            "milp"
           ]
         }
       ]
     },
-    "capacitatedfacilitylocationblock": {
+    "cflb": {
       "description": "Capacitated facility location Block",
       "dependencies": [
         {
           "name": "smspp",
           "default-features": false,
           "features": [
-            "binaryknapsackblock",
-            "mcfblock"
+            "bkb",
+            "mcf"
           ]
         }
       ]
     },
-    "frankwolfesolver": {
+    "frankwolfe": {
       "description": "Frank-Wolfe and Dantzig-Wolfe decomposition Solver"
     },
-    "investmentblock": {
+    "investment": {
       "description": "Investment (capacity expansion) Block",
       "dependencies": [
         "boost-serialization",
@@ -90,44 +90,44 @@
           "name": "smspp",
           "default-features": false,
           "features": [
-            "sddpblock",
-            "twostagestochasticblock",
+            "sddp",
+            "tssb",
             "ucblock"
           ]
         }
       ]
     },
-    "lagrangiandualsolver": {
+    "lds": {
       "description": "Lagrangian dual Solver",
       "dependencies": [
         {
           "name": "smspp",
           "default-features": false,
           "features": [
-            "milpsolver"
+            "milp"
           ]
         }
       ]
     },
-    "lukfiblock": {
+    "lukfi": {
       "description": "Test functions for nonsmooth optimization"
     },
-    "mcfblock": {
+    "mcf": {
       "description": "Min-cost flow Block"
     },
-    "mcfclasssolver": {
+    "mcfclass": {
       "description": "Min-cost flow Solvers of MCFClass",
       "dependencies": [
         {
           "name": "smspp",
           "default-features": false,
           "features": [
-            "mcfblock"
+            "mcf"
           ]
         }
       ]
     },
-    "mcflemonsolver": {
+    "mcflemon": {
       "description": "Min-cost flow Solvers of LEMON",
       "dependencies": [
         "liblemon",
@@ -139,56 +139,44 @@
           "name": "smspp",
           "default-features": false,
           "features": [
-            "mcfblock"
+            "mcf"
           ]
         }
       ]
     },
-    "milpsolver": {
+    "milp": {
       "description": "MILP Solvers, here on HiGHS",
       "dependencies": [
         "boost-preprocessor",
         "highs"
       ]
     },
-    "mmcfblock": {
+    "mmcf": {
       "description": "Multicommodity min-cost flow Block",
       "dependencies": [
         {
           "name": "smspp",
           "default-features": false,
           "features": [
-            "binaryknapsackblock",
-            "mcfblock"
+            "bkb",
+            "mcf"
           ]
         }
       ]
     },
-    "multistagestochasticblock": {
+    "mssb": {
       "description": "Multi-stage stochastic Block",
       "dependencies": [
         {
           "name": "smspp",
           "default-features": false,
           "features": [
-            "twostagestochasticblock"
+            "tssb"
           ]
         }
       ]
     },
-    "scenarioreductionsolver": {
-      "description": "Scenario reduction Solvers",
-      "dependencies": [
-        {
-          "name": "smspp",
-          "default-features": false,
-          "features": [
-            "twostagestochasticblock"
-          ]
-        }
-      ]
-    },
-    "sddpblock": {
+    "sddp": {
       "description": "Stochastic Dual Dynamic Programming Block",
       "dependencies": [
         "boost-iostreams",
@@ -201,28 +189,40 @@
           "name": "smspp",
           "default-features": false,
           "features": [
-            "stochasticblock"
+            "stochastic"
           ]
         },
         "stopt"
       ]
     },
-    "singleflowdcrblock": {
+    "sfdcr": {
       "description": "Single-flow delay-constrained routing Block"
     },
-    "stochasticblock": {
+    "srs": {
+      "description": "Scenario reduction Solvers",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "tssb"
+          ]
+        }
+      ]
+    },
+    "stochastic": {
       "description": "Stochastic Block and scenario sets",
       "dependencies": [
         {
           "name": "smspp",
           "default-features": false,
           "features": [
-            "capacitatedfacilitylocationblock"
+            "cflb"
           ]
         }
       ]
     },
-    "svmblock": {
+    "svm": {
       "description": "Support Vector Machine Block",
       "dependencies": [
         "liblinear",
@@ -238,14 +238,14 @@
         }
       ]
     },
-    "twostagestochasticblock": {
+    "tssb": {
       "description": "Two-stage stochastic Block",
       "dependencies": [
         {
           "name": "smspp",
           "default-features": false,
           "features": [
-            "stochasticblock"
+            "stochastic"
           ]
         }
       ]
