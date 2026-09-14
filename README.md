@@ -6,7 +6,7 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 
 | Port  | Version | Upstream                                    |
 |-------|---------|---------------------------------------------|
-| smspp | 0.6.2   | https://gitlab.com/smspp/smspp-project      |
+| smspp | 0.6.3   | https://gitlab.com/smspp/smspp-project      |
 | stopt | 6.3     | https://gitlab.com/stochastic-control/StOpt |
 
 `stopt` is a dependency of `smspp` that is not in the default vcpkg registry, so

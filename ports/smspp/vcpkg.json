@@ -1,6 +1,6 @@
 {
   "name": "smspp",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "A C++17 framework for modeling and solving block-structured mathematical optimization problems",
   "homepage": "https://gitlab.com/smspp/smspp-project",
   "license": "LGPL-3.0-only",
@@ -244,6 +244,5 @@
     "ucblock": {
       "description": "Unit Commitment Block, its units and networks"
     }
-  },
-  "port-version": 1
+  }
 }
