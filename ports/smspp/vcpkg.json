@@ -211,16 +211,7 @@
       ]
     },
     "stochastic": {
-      "description": "Stochastic Block and scenario sets",
-      "dependencies": [
-        {
-          "name": "smspp",
-          "default-features": false,
-          "features": [
-            "cflb"
-          ]
-        }
-      ]
+      "description": "Stochastic Block and scenario sets"
     },
     "svm": {
       "description": "Support Vector Machine Block",
@@ -253,5 +244,6 @@
     "ucblock": {
       "description": "Unit Commitment Block, its units and networks"
     }
-  }
+  },
+  "port-version": 1
 }
