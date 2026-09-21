@@ -52,8 +52,6 @@
     "bundle": {
       "description": "Bundle methods for nondifferentiable optimization",
       "dependencies": [
-        "bzip2",
-        "zlib",
         {
           "name": "smspp",
           "default-features": false,
