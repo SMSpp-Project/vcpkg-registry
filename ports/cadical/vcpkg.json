@@ -1,0 +1,8 @@
+{
+  "name": "cadical",
+  "version": "3.0.1",
+  "description": "CaDiCaL, a simplified satisfiability solver, as a static library",
+  "homepage": "https://github.com/arminbiere/cadical",
+  "license": "MIT",
+  "supports": "!windows"
+}

@@ -40,6 +40,7 @@ set(smspp_modules
     milp MILPSolver
     mmcf MMCFBlock
     mssb MultiStageStochasticBlock
+    sat SATBlock
     srs ScenarioReductionSolver
     sddp SDDPBlock
     sfdcr SingleFlowDCRBlock
@@ -157,7 +158,10 @@ vcpkg_configure_cmake(
     -DCMAKE_DISABLE_FIND_PACKAGE_SCIP=ON
     -DCMAKE_DISABLE_FIND_PACKAGE_PIPS=ON
     -DCMAKE_DISABLE_FIND_PACKAGE_Torch=ON
+    # the library of MiniSat is in no port, hence SATBlock has CaDiCaL only
+    -DCMAKE_DISABLE_FIND_PACKAGE_MiniSat=ON
     -DHiGHS_ROOT=${CURRENT_INSTALLED_DIR}
+    -DCADICAL_ROOT=${CURRENT_INSTALLED_DIR}
     -DStOpt_ROOT=${CURRENT_INSTALLED_DIR}
     -DCoinUtils_ROOT=${CURRENT_INSTALLED_DIR}
     -DOsi_ROOT=${CURRENT_INSTALLED_DIR}

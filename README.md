@@ -4,19 +4,22 @@ A [vcpkg git registry](https://learn.microsoft.com/vcpkg/produce/publish-to-a-gi
 that packages the [SMS++](https://gitlab.com/smspp/smspp-project) library as a
 vcpkg port, so any project can pull `smspp` as a dependency.
 
-| Port  | Version | Upstream                                    |
-|-------|---------|---------------------------------------------|
-| smspp | 0.6.3   | https://gitlab.com/smspp/smspp-project      |
-| stopt | 6.3     | https://gitlab.com/stochastic-control/StOpt |
+| Port    | Version | Upstream                                    |
+|---------|---------|---------------------------------------------|
+| smspp   | 0.6.3   | https://gitlab.com/smspp/smspp-project      |
+| stopt   | 6.3     | https://gitlab.com/stochastic-control/StOpt |
+| cadical | 3.0.1   | https://github.com/arminbiere/cadical       |
 
-`stopt` is a dependency of `smspp` that is not in the default vcpkg registry, so
-it is hosted here too: a project depending on `smspp` routes both packages to
-this single registry and needs no other.
+`stopt` and `cadical` are dependencies of `smspp` that are not in the default
+vcpkg registry, so they are hosted here too: a project depending on `smspp`
+routes these packages to this single registry and needs no other. `cadical`,
+the SAT solver of the `sat` feature, is built as a static library, and not on
+Windows, where CaDiCaL does not build.
 
 ## Using SMS++ as a dependency
 
 In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
-`stopt`) to this registry under `configuration.registries`:
+`stopt` and `cadical`) to this registry under `configuration.registries`:
 
 ```json
 {
@@ -34,7 +37,8 @@ In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
         "baseline": "<commit-SHA-of-this-registry>",
         "packages": [
           "smspp",
-          "stopt"
+          "stopt",
+          "cadical"
         ]
       }
     ]
@@ -90,8 +94,13 @@ ports/
   stopt/
     portfile.cmake      # fetches StOpt v6.3 from GitLab and builds it
     vcpkg.json          # port manifest + dependencies
+  cadical/
+    portfile.cmake      # fetches CaDiCaL rel-3.0.1 from GitHub and builds it
+    vcpkg.json          # port manifest
 versions/
   baseline.json         # default versions served by the registry
+  c-/
+    cadical.json        # version -> git-tree map
   s-/
     smspp.json          # version -> git-tree map
     stopt.json          # version -> git-tree map

@@ -30,6 +30,7 @@
     "milp",
     "mmcf",
     "mssb",
+    "sat",
     "sddp",
     "sfdcr",
     "srs",
@@ -173,6 +174,15 @@
           "features": [
             "tssb"
           ]
+        }
+      ]
+    },
+    "sat": {
+      "description": "SAT and weighted MaxSAT Block, with the SAT solver CaDiCaL",
+      "dependencies": [
+        {
+          "name": "cadical",
+          "platform": "!windows"
         }
       ]
     },
