@@ -31,6 +31,7 @@
     "mmcf",
     "mssb",
     "sat",
+    "satellites",
     "sddp",
     "sfdcr",
     "srs",
@@ -185,6 +186,9 @@
           "platform": "!windows"
         }
       ]
+    },
+    "satellites": {
+      "description": "Satellite Constellation Design Problem Block"
     },
     "sddp": {
       "description": "Stochastic Dual Dynamic Programming Block",

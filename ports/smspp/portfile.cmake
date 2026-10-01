@@ -41,9 +41,10 @@ set(smspp_modules
     mmcf MMCFBlock
     mssb MultiStageStochasticBlock
     sat SATBlock
-    srs ScenarioReductionSolver
+    satellites SatellitesBlock
     sddp SDDPBlock
     sfdcr SingleFlowDCRBlock
+    srs ScenarioReductionSolver
     stochastic StochasticBlock
     svm SVMBlock
     tools tools
