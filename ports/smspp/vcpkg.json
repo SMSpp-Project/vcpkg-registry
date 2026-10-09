@@ -55,11 +55,6 @@
     "bundle": {
       "description": "Bundle methods for nondifferentiable optimization",
       "dependencies": [
-        "bzip2",
-        "coin-or-clp",
-        "coin-or-osi",
-        "coinutils",
-        "zlib",
         {
           "name": "smspp",
           "default-features": false,

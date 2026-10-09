@@ -165,9 +165,6 @@ vcpkg_configure_cmake(
     -DHiGHS_ROOT=${CURRENT_INSTALLED_DIR}
     -DCADICAL_ROOT=${CURRENT_INSTALLED_DIR}
     -DStOpt_ROOT=${CURRENT_INSTALLED_DIR}
-    -DCoinUtils_ROOT=${CURRENT_INSTALLED_DIR}
-    -DOsi_ROOT=${CURRENT_INSTALLED_DIR}
-    -DClp_ROOT=${CURRENT_INSTALLED_DIR}
     # netcdf-c is a static lib here, so its private deps (curl, tinyxml2) must
     # propagate as $<LINK_ONLY:...> targets into executables built in sibling
     # subdirectories (e.g. UCBlock/tools). Those imported targets are only
