@@ -28,6 +28,7 @@
     "mcfclass",
     "mcflemon",
     "milp",
+    "mkab",
     "mmcf",
     "mssb",
     "sat",
@@ -151,6 +152,18 @@
       "dependencies": [
         "boost-preprocessor",
         "highs"
+      ]
+    },
+    "mkab": {
+      "description": "Multiple knapsack assignment Block",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "bkb"
+          ]
+        }
       ]
     },
     "mmcf": {

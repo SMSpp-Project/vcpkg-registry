@@ -38,6 +38,7 @@ set(smspp_modules
     mcfclass MCFClassSolver
     mcflemon MCFLemonSolver
     milp MILPSolver
+    mkab MultiKnapsackAssignBlock
     mmcf MMCFBlock
     mssb MultiStageStochasticBlock
     sat SATBlock
