@@ -60,7 +60,9 @@ open(p, 'w').write(s)
 PYEOF
 
 # the version in the table of the README
-sed -i -E "s/^(\| smspp \| )[^ ]+( +\|)/\1$VERSION\2/" README.md
+sed -i -E "s/^(\| smspp +\| )[0-9][^ ]*( *\|)/\1$VERSION\2/" README.md
+grep -qE "^\| smspp +\| $VERSION " README.md || {
+  echo "no row of smspp in the table of README.md"; exit 1; }
 
 git add ports/smspp
 TREE=$(git write-tree --prefix=ports/smspp/)

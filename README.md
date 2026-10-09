@@ -6,7 +6,7 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 
 | Port    | Version | Upstream                                    |
 |---------|---------|---------------------------------------------|
-| smspp   | 0.6.3   | https://gitlab.com/smspp/smspp-project      |
+| smspp   | 0.7.0   | https://gitlab.com/smspp/smspp-project      |
 | stopt   | 6.3     | https://gitlab.com/stochastic-control/StOpt |
 | cadical | 3.0.1   | https://github.com/arminbiere/cadical       |
 
