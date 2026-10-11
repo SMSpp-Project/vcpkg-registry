@@ -102,6 +102,7 @@
           "name": "smspp",
           "default-features": false,
           "features": [
+            "bnx",
             "milp"
           ]
         }
