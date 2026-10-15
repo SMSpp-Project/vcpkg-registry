@@ -9,17 +9,21 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 | smspp   | 0.7.0   | https://gitlab.com/smspp/smspp-project      |
 | stopt   | 6.3     | https://gitlab.com/stochastic-control/StOpt |
 | cadical | 3.0.1   | https://github.com/arminbiere/cadical       |
+| daqp    | 0.10.3  | https://github.com/darnstrom/daqp           |
 
-`stopt` and `cadical` are dependencies of `smspp` that are not in the default
-vcpkg registry, so they are hosted here too: a project depending on `smspp`
-routes these packages to this single registry and needs no other. `cadical`,
-the SAT solver of the `sat` feature, is built as a static library, and not on
-Windows, where CaDiCaL does not build.
+`stopt`, `cadical` and `daqp` are dependencies of `smspp` that are not in the
+default vcpkg registry, so they are hosted here too: a project depending on
+`smspp` routes these packages to this single registry and needs no other.
+`cadical`, the SAT solver of the `sat` feature, is built as a static library,
+and not on Windows, where CaDiCaL does not build. `daqp`, the QP solver of the
+`milp` feature next to HiGHS, builds the shared or the static library as the
+triplet asks; its DLL exports every symbol, since DAQP declares none.
 
 ## Using SMS++ as a dependency
 
 In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
-`stopt` and `cadical`) to this registry under `configuration.registries`:
+`stopt`, `cadical` and `daqp`) to this registry under
+`configuration.registries`:
 
 ```json
 {
@@ -38,7 +42,8 @@ In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
         "packages": [
           "smspp",
           "stopt",
-          "cadical"
+          "cadical",
+          "daqp"
         ]
       }
     ]
@@ -97,10 +102,17 @@ ports/
   cadical/
     portfile.cmake      # fetches CaDiCaL rel-3.0.1 from GitHub and builds it
     vcpkg.json          # port manifest
+  daqp/
+    portfile.cmake      # fetches DAQP v0.10.3 from GitHub and builds it
+    build-options.patch # one library per linkage, libm, no GCC flags on MSVC
+    usage               # the CMake targets it provides
+    vcpkg.json          # port manifest
 versions/
   baseline.json         # default versions served by the registry
   c-/
     cadical.json        # version -> git-tree map
+  d-/
+    daqp.json           # version -> git-tree map
   s-/
     smspp.json          # version -> git-tree map
     stopt.json          # version -> git-tree map

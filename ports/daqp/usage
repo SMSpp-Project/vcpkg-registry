@@ -1,0 +1,5 @@
+daqp provides CMake targets, daqp when it is built as a shared library and
+daqpstat when it is built as a static one:
+
+  find_package(daqp CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE $<IF:$<TARGET_EXISTS:daqp>,daqp,daqpstat>)
