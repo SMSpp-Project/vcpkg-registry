@@ -37,6 +37,7 @@
     "sfdcr",
     "srs",
     "stochastic",
+    "subgrad",
     "svm",
     "tools",
     "tssb",
@@ -236,6 +237,9 @@
     },
     "stochastic": {
       "description": "Stochastic Block and scenario sets"
+    },
+    "subgrad": {
+      "description": "Subgradient methods for nondifferentiable optimization"
     },
     "svm": {
       "description": "Support Vector Machine Block",

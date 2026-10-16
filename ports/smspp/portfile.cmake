@@ -47,6 +47,7 @@ set(smspp_modules
     sfdcr SingleFlowDCRBlock
     srs ScenarioReductionSolver
     stochastic StochasticBlock
+    subgrad SubGradSolver
     svm SVMBlock
     tools tools
     tssb TwoStageStochasticBlock
