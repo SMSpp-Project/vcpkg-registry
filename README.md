@@ -10,23 +10,19 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 | stopt   | 6.3     | https://gitlab.com/stochastic-control/StOpt |
 | cadical | 3.0.1   | https://github.com/arminbiere/cadical       |
 | daqp    | 0.10.3  | https://github.com/darnstrom/daqp           |
-| piqp    | 0.6.4   | https://github.com/PREDICT-EPFL/piqp        |
 
-`stopt`, `cadical`, `daqp` and `piqp` are dependencies of `smspp` that are not
-in the default vcpkg registry, so they are hosted here too: a project depending
-on `smspp` routes these packages to this single registry and needs no other.
+`stopt`, `cadical` and `daqp` are dependencies of `smspp` that are not in the
+default vcpkg registry, so they are hosted here too: a project depending on
+`smspp` routes these packages to this single registry and needs no other.
 `cadical`, the SAT solver of the `sat` feature, is built as a static library,
-and not on Windows, where CaDiCaL does not build. `daqp`, a QP solver of the
+and not on Windows, where CaDiCaL does not build. `daqp`, the QP solver of the
 `milp` feature next to HiGHS, builds the shared or the static library as the
-triplet asks; its DLL exports every symbol, since DAQP declares none. `piqp`,
-another QP solver of the `milp` feature, is always built as a static library,
-since PIQP declares no symbol for a DLL; `proxsuite` and `osqp`, the other two,
-come from the default registry.
+triplet asks; its DLL exports every symbol, since DAQP declares none.
 
 ## Using SMS++ as a dependency
 
 In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
-`stopt`, `cadical`, `daqp` and `piqp`) to this registry under
+`stopt`, `cadical` and `daqp`) to this registry under
 `configuration.registries`:
 
 ```json
@@ -47,8 +43,7 @@ In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
           "smspp",
           "stopt",
           "cadical",
-          "daqp",
-          "piqp"
+          "daqp"
         ]
       }
     ]

@@ -1,5 +1,0 @@
-piqp provides CMake targets, piqp with its common templates compiled and
-piqp_header_only without:
-
-  find_package(piqp CONFIG REQUIRED)
-  target_link_libraries(main PRIVATE piqp::piqp)
