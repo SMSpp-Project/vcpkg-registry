@@ -145,11 +145,14 @@
       ]
     },
     "milp": {
-      "description": "MILP Solvers, here on HiGHS and DAQP",
+      "description": "MILP Solvers, here on HiGHS, DAQP, ProxQP, PIQP and OSQP",
       "dependencies": [
         "boost-preprocessor",
         "daqp",
-        "highs"
+        "highs",
+        "osqp",
+        "piqp",
+        "proxsuite"
       ]
     },
     "mkab": {
