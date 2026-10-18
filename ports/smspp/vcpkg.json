@@ -145,11 +145,12 @@
       ]
     },
     "milp": {
-      "description": "MILP Solvers, here on HiGHS and DAQP",
+      "description": "MILP Solvers, here on HiGHS, DAQP and qpOASES",
       "dependencies": [
         "boost-preprocessor",
         "daqp",
-        "highs"
+        "highs",
+        "qpoases"
       ]
     },
     "mkab": {

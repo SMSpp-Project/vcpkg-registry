@@ -15,9 +15,11 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 default vcpkg registry, so they are hosted here too: a project depending on
 `smspp` routes these packages to this single registry and needs no other.
 `cadical`, the SAT solver of the `sat` feature, is built as a static library,
-and not on Windows, where CaDiCaL does not build. `daqp`, the QP solver of the
+and not on Windows, where CaDiCaL does not build. `daqp`, a QP solver of the
 `milp` feature next to HiGHS, builds the shared or the static library as the
 triplet asks; its DLL exports every symbol, since DAQP declares none.
+`qpoases`, the other QP solver of the `milp` feature, comes from the default
+registry, whose port builds it as a static library only.
 
 ## Using SMS++ as a dependency
 

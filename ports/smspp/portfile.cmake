@@ -165,6 +165,7 @@ vcpkg_configure_cmake(
     -DCMAKE_DISABLE_FIND_PACKAGE_MiniSat=ON
     -DHiGHS_ROOT=${CURRENT_INSTALLED_DIR}
     -DDAQP_ROOT=${CURRENT_INSTALLED_DIR}
+    -DqpOASES_ROOT=${CURRENT_INSTALLED_DIR}
     -DCADICAL_ROOT=${CURRENT_INSTALLED_DIR}
     -DStOpt_ROOT=${CURRENT_INSTALLED_DIR}
     # netcdf-c is a static lib here, so its private deps (curl, tinyxml2) must
