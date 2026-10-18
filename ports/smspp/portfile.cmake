@@ -160,6 +160,9 @@ vcpkg_configure_cmake(
     -DCMAKE_DISABLE_FIND_PACKAGE_GUROBI=ON
     -DCMAKE_DISABLE_FIND_PACKAGE_SCIP=ON
     -DCMAKE_DISABLE_FIND_PACKAGE_PIPS=ON
+    -DCMAKE_DISABLE_FIND_PACKAGE_MOSEK=ON
+    # the C interface of Clarabel is in no port
+    -DCMAKE_DISABLE_FIND_PACKAGE_Clarabel=ON
     -DCMAKE_DISABLE_FIND_PACKAGE_Torch=ON
     # the library of MiniSat is in no port, hence SATBlock has CaDiCaL only
     -DCMAKE_DISABLE_FIND_PACKAGE_MiniSat=ON
