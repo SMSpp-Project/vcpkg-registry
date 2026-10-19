@@ -166,11 +166,29 @@ vcpkg_configure_cmake(
     -DCMAKE_DISABLE_FIND_PACKAGE_Torch=ON
     # the library of MiniSat is in no port, hence SATBlock has CaDiCaL only
     -DCMAKE_DISABLE_FIND_PACKAGE_MiniSat=ON
+    # quadprog is under the GPL
+    -DCMAKE_DISABLE_FIND_PACKAGE_quadprog=ON
+    # every external where vcpkg installs it: the umbrella reads defaults for
+    # where they are from extlib/, several of which are in /opt, and those
+    # are not to be picked up on the machine that builds the port
     -DHiGHS_ROOT=${CURRENT_INSTALLED_DIR}
     -DDAQP_ROOT=${CURRENT_INSTALLED_DIR}
     -DqpOASES_ROOT=${CURRENT_INSTALLED_DIR}
+    -Dproxsuite_ROOT=${CURRENT_INSTALLED_DIR}
+    -Dpiqp_ROOT=${CURRENT_INSTALLED_DIR}
+    -Dosqp_ROOT=${CURRENT_INSTALLED_DIR}
+    -Dqpmad_ROOT=${CURRENT_INSTALLED_DIR}
     -DCADICAL_ROOT=${CURRENT_INSTALLED_DIR}
     -DStOpt_ROOT=${CURRENT_INSTALLED_DIR}
+    -DLEMON_ROOT=${CURRENT_INSTALLED_DIR}
+    -DLIBSVM_ROOT=${CURRENT_INSTALLED_DIR}
+    -DLIBLINEAR_ROOT=${CURRENT_INSTALLED_DIR}
+    # the sources that BinaryKnapsackBlock compiles in when it finds them,
+    # in /opt by default: COMBO is for non-commercial use only, and neither
+    # is in a port
+    -DCOMBO_ROOT=OFF
+    -DRECORD_ROOT=OFF
+    -DSMSPP_EXTLIB_DEFAULTS=OFF
     # netcdf-c is a static lib here, so its private deps (curl, tinyxml2) must
     # propagate as $<LINK_ONLY:...> targets into executables built in sibling
     # subdirectories (e.g. UCBlock/tools). Those imported targets are only
