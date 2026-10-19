@@ -1,0 +1,4 @@
+qpmad is header-only and provides the CMake target qpmad:
+
+  find_package(qpmad CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE qpmad::qpmad)
