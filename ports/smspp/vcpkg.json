@@ -21,6 +21,7 @@
     "bundle",
     "cflb",
     "frankwolfe",
+    "hqp",
     "investment",
     "lds",
     "lukfi",
@@ -80,6 +81,9 @@
     },
     "frankwolfe": {
       "description": "Frank-Wolfe and Dantzig-Wolfe decomposition Solver"
+    },
+    "hqp": {
+      "description": "Hierarchical (lexicographic) QP Block and Solver"
     },
     "investment": {
       "description": "Investment (capacity expansion) Block",

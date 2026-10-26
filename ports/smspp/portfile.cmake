@@ -31,6 +31,7 @@ set(smspp_modules
     bundle BundleSolver
     cflb CapacitatedFacilityLocationBlock
     frankwolfe FrankWolfeSolver
+    hqp HQPBlock
     investment InvestmentBlock
     lds LagrangianDualSolver
     lukfi LukFiBlock
