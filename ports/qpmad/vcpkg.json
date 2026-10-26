@@ -1,6 +1,7 @@
 {
   "name": "qpmad",
   "version": "1.5.1",
+  "port-version": 1,
   "description": "qpmad, a dual active-set solver (Goldfarb-Idnani) for strictly convex quadratic programs",
   "homepage": "https://github.com/asherikov/qpmad",
   "license": "Apache-2.0",

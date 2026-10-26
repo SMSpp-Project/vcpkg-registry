@@ -18,6 +18,10 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(CONFIG_PATH share/qpmad/cmake)
+# the configuration includes its targets from share/qpmad/cmake, where the
+# install puts them, while the fixup above moves them to share/qpmad
+vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/${PORT}/qpmadConfig.cmake"
+    "share/qpmad/cmake/qpmadTargets.cmake" "share/qpmad/qpmadTargets.cmake")
 
 file(INSTALL "${CMAKE_CURRENT_LIST_DIR}/usage"
      DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}")
