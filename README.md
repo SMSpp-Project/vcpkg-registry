@@ -12,7 +12,7 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 | daqp     | 0.10.3     | https://github.com/darnstrom/daqp           |
 | piqp     | 0.6.4      | https://github.com/PREDICT-EPFL/piqp        |
 | qpmad    | 1.5.1      | https://github.com/asherikov/qpmad          |
-| lemon-ng | 2026-10-31 | https://github.com/dmeoli/lemon-ng          |
+| lemon-ng | 1.4.0      | https://github.com/dmeoli/lemon-ng          |
 
 `stopt`, `cadical`, `daqp`, `piqp`, `qpmad` and `lemon-ng` are dependencies of
 `smspp` that are not in the default vcpkg registry, so they are hosted here too:
@@ -25,9 +25,8 @@ triplet asks; its DLL exports every symbol, since DAQP declares none. `piqp`,
 another QP solver of the `milp` feature, is always built as a static library,
 since PIQP declares no symbol for a DLL, and `qpmad` is header-only;
 `qpoases`, `proxsuite` and `osqp`, the others, come from the default registry,
-whose port builds qpOASES as a static library only. `lemon-ng`, the LEMON of
-the `mcflemon` feature, is a maintained fork of LEMON pinned to a commit of its
-`master`, which the version date of the port names, and is built as a static
+whose port builds qpOASES as a static library only. `lemon-ng`, the LEMON of the
+`mcflemon` feature, is a maintained fork of LEMON, and is built as a static
 library, since LEMON declares no symbol for a DLL.
 
 ## Using SMS++ as a dependency

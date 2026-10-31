@@ -1,14 +1,13 @@
-# lemon-ng is pinned to a commit of its master, which the version date of the
-# port names; it is built without the LP and MIP backends, the tests, the
-# demos, the tools and the documentation, and always as a static library,
-# since LEMON declares no symbol for a DLL
+# lemon-ng at the tag of its version, built without the LP and MIP backends,
+# the tests, the demos, the tools and the documentation, and always as a
+# static library, since LEMON declares no symbol for a DLL
 vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO dmeoli/lemon-ng
-    REF 0f22c1243f084c8662da6181502c433b1ee20390
-    SHA512 2bd2e880073b93238017d83603bdcdd96a68309f4acfb4f849ea67f1ac7105c8b339775bd5ce882011c24347d9be70383ee6743d345820ccd17e2515aecde1c2
+    REF ${VERSION}
+    SHA512 80be79b51d1d7aa0eb4c135215ce3508ea225f0b8a23daa2f7912a446f2b4ba1acfd4a596eaaa87a779d08f8169170f2831c39b472764b7f47e01fe7a0d175df
     HEAD_REF master
 )
 
