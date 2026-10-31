@@ -4,19 +4,20 @@ A [vcpkg git registry](https://learn.microsoft.com/vcpkg/produce/publish-to-a-gi
 that packages the [SMS++](https://gitlab.com/smspp/smspp-project) library as a
 vcpkg port, so any project can pull `smspp` as a dependency.
 
-| Port    | Version | Upstream                                    |
-|---------|---------|---------------------------------------------|
-| smspp   | 0.7.0   | https://gitlab.com/smspp/smspp-project      |
-| stopt   | 6.3     | https://gitlab.com/stochastic-control/StOpt |
-| cadical | 3.0.1   | https://github.com/arminbiere/cadical       |
-| daqp    | 0.10.3  | https://github.com/darnstrom/daqp           |
-| piqp    | 0.6.4   | https://github.com/PREDICT-EPFL/piqp        |
-| qpmad   | 1.5.1   | https://github.com/asherikov/qpmad          |
+| Port     | Version    | Upstream                                    |
+|----------|------------|---------------------------------------------|
+| smspp    | 0.7.0      | https://gitlab.com/smspp/smspp-project      |
+| stopt    | 6.3        | https://gitlab.com/stochastic-control/StOpt |
+| cadical  | 3.0.1      | https://github.com/arminbiere/cadical       |
+| daqp     | 0.10.3     | https://github.com/darnstrom/daqp           |
+| piqp     | 0.6.4      | https://github.com/PREDICT-EPFL/piqp        |
+| qpmad    | 1.5.1      | https://github.com/asherikov/qpmad          |
+| lemon-ng | 2026-10-31 | https://github.com/dmeoli/lemon-ng          |
 
-`stopt`, `cadical`, `daqp`, `piqp` and `qpmad` are dependencies of `smspp` that
-are not in the default vcpkg registry, so they are hosted here too: a project
-depending on `smspp` routes these packages to this single registry and needs no
-other.
+`stopt`, `cadical`, `daqp`, `piqp`, `qpmad` and `lemon-ng` are dependencies of
+`smspp` that are not in the default vcpkg registry, so they are hosted here too:
+a project depending on `smspp` routes these packages to this single registry and
+needs no other.
 `cadical`, the SAT solver of the `sat` feature, is built as a static library,
 and not on Windows, where CaDiCaL does not build. `daqp`, a QP solver of the
 `milp` feature next to HiGHS, builds the shared or the static library as the
@@ -24,13 +25,16 @@ triplet asks; its DLL exports every symbol, since DAQP declares none. `piqp`,
 another QP solver of the `milp` feature, is always built as a static library,
 since PIQP declares no symbol for a DLL, and `qpmad` is header-only;
 `qpoases`, `proxsuite` and `osqp`, the others, come from the default registry,
-whose port builds qpOASES as a static library only.
+whose port builds qpOASES as a static library only. `lemon-ng`, the LEMON of
+the `mcflemon` feature, is a maintained fork of LEMON pinned to a commit of its
+`master`, which the version date of the port names, and is built as a static
+library, since LEMON declares no symbol for a DLL.
 
 ## Using SMS++ as a dependency
 
 In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
-`stopt`, `cadical`, `daqp`, `piqp` and `qpmad`) to this registry under
-`configuration.registries`:
+`stopt`, `cadical`, `daqp`, `piqp`, `qpmad` and `lemon-ng`) to this registry
+under `configuration.registries`:
 
 ```json
 {
@@ -52,7 +56,8 @@ In your project's `vcpkg.json`, add `smspp` to `dependencies` and route it (and
           "cadical",
           "daqp",
           "piqp",
-          "qpmad"
+          "qpmad",
+          "lemon-ng"
         ]
       }
     ]
