@@ -13,6 +13,7 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 | piqp     | 0.6.4      | https://github.com/PREDICT-EPFL/piqp        |
 | qpmad    | 1.5.1      | https://github.com/asherikov/qpmad          |
 | lemon-ng | 1.4.0      | https://github.com/dmeoli/lemon-ng          |
+| quadprog | 0.1.14     | https://github.com/quadprog/quadprog        |
 
 `stopt`, `cadical`, `daqp`, `piqp`, `qpmad` and `lemon-ng` are dependencies of
 `smspp` that are not in the default vcpkg registry, so they are hosted here too:
@@ -27,7 +28,10 @@ since PIQP declares no symbol for a DLL, and `qpmad` is header-only;
 `qpoases`, `proxsuite` and `osqp`, the others, come from the default registry,
 whose port builds qpOASES as a static library only. `lemon-ng`, the LEMON of the
 `mcflemon` feature, is a maintained fork of LEMON, and is built as a static
-library, since LEMON declares no symbol for a DLL.
+library, since LEMON declares no symbol for a DLL. `quadprog`, the solver of
+`QuadProgMILPSolver`, is a static library built from its C sources; it is
+under the GPL, so the `smspp` port does not depend on it, and only the
+manifest of the umbrella that `INSTALL.ps1` uses asks for it.
 
 ## Using SMS++ as a dependency
 

@@ -1,0 +1,13 @@
+{
+  "name": "quadprog",
+  "version": "0.1.14",
+  "description": "quadprog, the dual active-set method of Goldfarb and Idnani for strictly convex quadratic programs, as a static library",
+  "homepage": "https://github.com/quadprog/quadprog",
+  "license": "GPL-2.0-or-later",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    }
+  ]
+}
