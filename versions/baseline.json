@@ -10,7 +10,7 @@
     },
     "lemon-ng": {
       "baseline": "1.4.0",
-      "port-version": 0
+      "port-version": 1
     },
     "piqp": {
       "baseline": "0.6.4",
