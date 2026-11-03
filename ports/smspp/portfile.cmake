@@ -7,6 +7,12 @@ set(VCPKG_POLICY_SKIP_MISPLACED_CMAKE_FILES_CHECK enabled)
 set(VCPKG_POLICY_SKIP_LIB_CMAKE_MERGE_CHECK enabled)
 set(VCPKG_POLICY_SKIP_ABSOLUTE_PATHS_CHECK enabled)
 
+# the classes of a module register themselves in the factories from static
+# objects, which a static library loses unless the program takes it whole:
+# the libraries of SMS++ are shared also under a static triplet (e.g., the
+# default x64-linux), whose dependencies are linked into them
+vcpkg_check_linkage(ONLY_DYNAMIC_LIBRARY)
+
 # smspp-project is an umbrella of git submodules (core SMS++, Blocks, Solvers,
 # tools), so the sources are the tarball of the release, which carries them
 # all together with the version of each; the release pipeline puts it in the
