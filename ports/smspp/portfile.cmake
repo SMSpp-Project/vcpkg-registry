@@ -7,6 +7,19 @@ set(VCPKG_POLICY_SKIP_MISPLACED_CMAKE_FILES_CHECK enabled)
 set(VCPKG_POLICY_SKIP_LIB_CMAKE_MERGE_CHECK enabled)
 set(VCPKG_POLICY_SKIP_ABSOLUTE_PATHS_CHECK enabled)
 
+# the classes of a module register themselves in the factories from static
+# objects, which a static library loses unless the program takes it whole:
+# the libraries of SMS++ are shared also under a static triplet (e.g., the
+# default x64-linux), whose dependencies are linked into them; there the
+# static libraries of HiGHS and OSQP, which both define csc_copy (with two
+# different signatures), cannot be linked into the same library of
+# MILPSolver, hence OSQPMILPSolver is left out
+set(smspp_osqp "")
+if (VCPKG_LIBRARY_LINKAGE STREQUAL "static")
+    set(smspp_osqp -DMILPSolver_USE_OSQP=OFF)
+endif ()
+vcpkg_check_linkage(ONLY_DYNAMIC_LIBRARY)
+
 # smspp-project is an umbrella of git submodules (core SMS++, Blocks, Solvers,
 # tools), so the sources are the tarball of the release, which carries them
 # all together with the version of each; the release pipeline puts it in the
@@ -178,6 +191,7 @@ vcpkg_configure_cmake(
     -Dproxsuite_ROOT=${CURRENT_INSTALLED_DIR}
     -Dpiqp_ROOT=${CURRENT_INSTALLED_DIR}
     -Dosqp_ROOT=${CURRENT_INSTALLED_DIR}
+    ${smspp_osqp}
     -Dqpmad_ROOT=${CURRENT_INSTALLED_DIR}
     -DCADICAL_ROOT=${CURRENT_INSTALLED_DIR}
     -DStOpt_ROOT=${CURRENT_INSTALLED_DIR}

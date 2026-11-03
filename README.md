@@ -32,6 +32,11 @@ library, since LEMON declares no symbol for a DLL. `quadprog`, the solver of
 `QuadProgMILPSolver`, is a static library built from its C sources; it is
 under the GPL, so the `smspp` port does not depend on it, and only the
 manifest of the umbrella that `INSTALL.ps1` uses asks for it.
+The libraries of `smspp` are shared under every triplet, since the classes of
+a module register themselves in the factories from static objects; under a
+static triplet (e.g., the default `x64-linux`) the dependencies are linked
+into them, and `OSQPMILPSolver` is left out, since the static libraries of
+HiGHS and OSQP both define `csc_copy`.
 
 ## Using SMS++ as a dependency
 
