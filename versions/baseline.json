@@ -17,7 +17,7 @@
       "port-version": 1
     },
     "piqp": {
-      "baseline": "0.6.4",
+      "baseline": "0.7.0",
       "port-version": 0
     },
     "qpmad": {
