@@ -10,7 +10,7 @@ vcpkg port, so any project can pull `smspp` as a dependency.
 | stopt    | 6.3        | https://gitlab.com/stochastic-control/StOpt |
 | cadical  | 3.0.1      | https://github.com/arminbiere/cadical       |
 | daqp     | 0.10.3     | https://github.com/darnstrom/daqp           |
-| piqp     | 0.6.4      | https://github.com/PREDICT-EPFL/piqp        |
+| piqp     | 0.7.0      | https://github.com/PREDICT-EPFL/piqp        |
 | qpmad    | 1.5.1      | https://github.com/asherikov/qpmad          |
 | lemon-ng | 1.4.0      | https://github.com/dmeoli/lemon-ng          |
 | quadprog | 0.1.14     | https://github.com/quadprog/quadprog        |
