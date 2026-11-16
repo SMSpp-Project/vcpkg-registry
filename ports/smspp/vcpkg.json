@@ -15,6 +15,7 @@
     "netcdf-cxx4"
   ],
   "default-features": [
+    "bdmq",
     "bds",
     "bkb",
     "bnx",
@@ -45,6 +46,9 @@
     "ucblock"
   ],
   "features": {
+    "bdmq": {
+      "description": "Bundle master problem Solver based on BDMinQuad"
+    },
     "bds": {
       "description": "Generic Benders decomposition Solver"
     },

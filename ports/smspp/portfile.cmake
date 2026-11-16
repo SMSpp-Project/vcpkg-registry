@@ -38,6 +38,7 @@ file(REMOVE "${SOURCE_PATH}/CMakeSettings.txt")
 
 # feature -> module, whose BUILD_<module> option builds it
 set(smspp_modules
+    bdmq BDMinQuadSolver
     bds BendersDecompositionSolver
     bkb BinaryKnapsackBlock
     bnx BranchAndXSolver
