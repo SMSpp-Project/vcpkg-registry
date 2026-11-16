@@ -1,6 +1,7 @@
 {
   "name": "smspp",
   "version": "0.8.0",
+  "port-version": 1,
   "description": "A C++20 framework for modeling and solving block-structured mathematical optimization problems",
   "homepage": "https://gitlab.com/smspp/smspp-project",
   "license": "LGPL-3.0-only",
@@ -15,7 +16,6 @@
     "netcdf-cxx4"
   ],
   "default-features": [
-    "bdmq",
     "bds",
     "bkb",
     "bnx",
@@ -46,9 +46,6 @@
     "ucblock"
   ],
   "features": {
-    "bdmq": {
-      "description": "Bundle master problem Solver based on BDMinQuad"
-    },
     "bds": {
       "description": "Generic Benders decomposition Solver"
     },

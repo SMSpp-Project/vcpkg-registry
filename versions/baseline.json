@@ -30,7 +30,7 @@
     },
     "smspp": {
       "baseline": "0.8.0",
-      "port-version": 0
+      "port-version": 1
     },
     "stopt": {
       "baseline": "6.3",
