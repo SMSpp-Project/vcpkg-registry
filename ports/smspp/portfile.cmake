@@ -43,6 +43,7 @@ set(smspp_modules
     bnx BranchAndXSolver
     bundle BundleSolver
     cflb CapacitatedFacilityLocationBlock
+    csp CSPBlock
     frankwolfe FrankWolfeSolver
     hqp HQPBlock
     investment InvestmentBlock

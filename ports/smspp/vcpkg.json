@@ -21,6 +21,7 @@
     "bnx",
     "bundle",
     "cflb",
+    "csp",
     "frankwolfe",
     "hqp",
     "investment",
@@ -79,6 +80,9 @@
           ]
         }
       ]
+    },
+    "csp": {
+      "description": "SMS++ Block for constraint programming (CP) problems"
     },
     "frankwolfe": {
       "description": "Frank-Wolfe and Dantzig-Wolfe decomposition Solver"
