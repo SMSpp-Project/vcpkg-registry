@@ -45,6 +45,7 @@ set(smspp_modules
     cflb CapacitatedFacilityLocationBlock
     csp CSPBlock
     frankwolfe FrankWolfeSolver
+    gab GeneralizedAssignmentBlock
     hqp HQPBlock
     investment InvestmentBlock
     lds LagrangianDualSolver

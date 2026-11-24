@@ -23,6 +23,7 @@
     "cflb",
     "csp",
     "frankwolfe",
+    "gab",
     "hqp",
     "investment",
     "lds",
@@ -86,6 +87,18 @@
     },
     "frankwolfe": {
       "description": "Frank-Wolfe and Dantzig-Wolfe decomposition Solver"
+    },
+    "gab": {
+      "description": "Generalized assignment Block",
+      "dependencies": [
+        {
+          "name": "smspp",
+          "default-features": false,
+          "features": [
+            "bkb"
+          ]
+        }
+      ]
     },
     "hqp": {
       "description": "Hierarchical (lexicographic) QP Block and Solver"
