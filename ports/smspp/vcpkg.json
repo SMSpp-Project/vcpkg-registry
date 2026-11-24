@@ -278,6 +278,7 @@
     "tools": {
       "description": "The command-line tools of the enabled modules, e.g. ucblock_solver, installed in tools/smspp",
       "dependencies": [
+        "boost-dll",
         {
           "name": "getopt",
           "platform": "windows"
