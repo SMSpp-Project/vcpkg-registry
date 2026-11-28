@@ -230,6 +230,20 @@ foreach(_smspp_exe IN LISTS _smspp_bin_exes)
 endforeach()
 if(_smspp_exe_names)
     vcpkg_copy_tools(TOOL_NAMES ${_smspp_exe_names} AUTO_CLEAN)
+    # the exported targets of those executables (smspp_plugin_names of SMS++,
+    # which the modules of a consumer run on their plugins) follow them
+    file(GLOB_RECURSE _smspp_targets
+         "${CURRENT_PACKAGES_DIR}/lib/cmake/*Targets-*.cmake")
+    foreach(_smspp_file IN LISTS _smspp_targets)
+        file(READ "${_smspp_file}" _smspp_text)
+        foreach(_smspp_name IN LISTS _smspp_exe_names)
+            string(REPLACE
+                   "\${_IMPORT_PREFIX}/bin/${_smspp_name}${VCPKG_TARGET_EXECUTABLE_SUFFIX}\""
+                   "\${_IMPORT_PREFIX}/tools/${PORT}/${_smspp_name}${VCPKG_TARGET_EXECUTABLE_SUFFIX}\""
+                   _smspp_text "${_smspp_text}")
+        endforeach()
+        file(WRITE "${_smspp_file}" "${_smspp_text}")
+    endforeach()
 endif()
 if(VCPKG_TARGET_IS_WINDOWS AND EXISTS "${CURRENT_PACKAGES_DIR}/tools/${PORT}")
     vcpkg_copy_tool_dependencies("${CURRENT_PACKAGES_DIR}/tools/${PORT}")
